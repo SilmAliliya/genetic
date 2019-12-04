@@ -5,7 +5,8 @@
 using namespace std;
 
 
-void konvert (float chromosom[6][5], float fenotyp[6]){
+void konvert (float chromosom[6][5], float fenotyp[6])
+{
     for (int i=0; i<6; i++)
     {
         int x=0;
@@ -17,40 +18,51 @@ void konvert (float chromosom[6][5], float fenotyp[6]){
     }
 }
 
-void funkcja(float funkcia[6], float fenotyp[6], float kolo[7], int a, int b, int c, int d, int *x){
+void funkcja(float funkcia[6], float fenotyp[6], float kolo[8], int a, int b, int c, int d, int x[2])
+{
     kolo[7]=0;
     for (int i=0; i<6; i++)
     {
-        funkcia[i]=a*pow(fenotyp[i],3) + a*pow(fenotyp[i],2) + c*fenotyp[i] + d;
+        funkcia[i]=a*pow(fenotyp[i],3) + b*pow(fenotyp[i],2) + c*fenotyp[i] + d;
         kolo[7]+=funkcia[i];
-        if (funkcia[i]>*x) *x=funkcia[i];
-        //cout<<*x<<endl;
+        if (funkcia[i]>x[0])
+            {x[0]=funkcia[i];x[1]=fenotyp[i];}
     }
 }
 
-void krzyzowanie (float chromosom[6][5], double pk) {
+void krzyzowanie (float chromosom[6][5], double pk)
+{
     for (int i=0; i<3; i++)
     {
-        float k=(rand() % 1001 )/1000.0; //cout<<k<<endl;
-        if (k<pk) {
-            int l=(long)rand%4;
-            for (int j=l; j<5; j++) {int chrom=chromosom[2*i][j]; chromosom[2*i][j]=chromosom[2*i+1][j]; chromosom[2*i+1][j]=chrom;}
+        float k=(rand() % 1001 )/1000.0;
+        if (k<pk)
+        {
+            int l=rand()%4;
+            for (int j=l; j<5; j++)
+            {
+                int chrom=chromosom[2*i][j];
+                chromosom[2*i][j]=chromosom[2*i+1][j];
+                chromosom[2*i+1][j]=chrom;
+            }
         }
     }
 }
 
-void mutacja (float chromosom[6][5],  double pm) {
+void mutacja (float chromosom[6][5],  double pm)
+{
     for (int i=0; i<6; i++)
     {
-        float m=(rand() % 1001 )/1000.0; //cout<<m<<endl;
-        if (m<pm) {
-            int l=(long)rand%5;
+        float m=(rand() % 1001 )/1000.0;
+        if (m<pm)
+        {
+            int l=rand()%5;
             chromosom[i][l]=1-chromosom[i][l];
         }
     }
 }
 
-void koloruletki (float kolo[7], float funk[6], float chrod[6][5],float chdziec[6][5]){
+void koloruletki (float kolo[8], float funk[6], float chrod[6][5],float chdziec[6][5])
+{
 
     for (int i=1; i<=6; i++)
     {
@@ -61,16 +73,53 @@ void koloruletki (float kolo[7], float funk[6], float chrod[6][5],float chdziec[
     for (int i=0; i<6; i++)
     {
         ruletka=rand()%101;
-        if (kolo[0]<ruletka && ruletka<kolo[1]) {for (int j=0; j<5; j++) {chdziec[i][j]=chrod[0][j];}};
-        if (kolo[1]<ruletka && ruletka<kolo[2]) {for (int j=0; j<5; j++) {chdziec[i][j]=chrod[1][j];}};
-        if (kolo[2]<ruletka && ruletka<kolo[3]) {for (int j=0; j<5; j++) {chdziec[i][j]=chrod[2][j];}};
-        if (kolo[3]<ruletka && ruletka<kolo[4]) {for (int j=0; j<5; j++) {chdziec[i][j]=chrod[3][j];}};
-        if (kolo[4]<ruletka && ruletka<kolo[5]) {for (int j=0; j<5; j++) {chdziec[i][j]=chrod[4][j];}};
-        if (kolo[5]<ruletka && ruletka<kolo[6]) {for (int j=0; j<5; j++) {chdziec[i][j]=chrod[5][j];}};
+        if (kolo[0]<ruletka && ruletka<kolo[1])
+        {
+            for (int j=0; j<5; j++)
+            {
+                chdziec[i][j]=chrod[0][j];
+            }
+        };
+        if (kolo[1]<ruletka && ruletka<kolo[2])
+        {
+            for (int j=0; j<5; j++)
+            {
+                chdziec[i][j]=chrod[1][j];
+            }
+        };
+        if (kolo[2]<ruletka && ruletka<kolo[3])
+        {
+            for (int j=0; j<5; j++)
+            {
+                chdziec[i][j]=chrod[2][j];
+            }
+        };
+        if (kolo[3]<ruletka && ruletka<kolo[4])
+        {
+            for (int j=0; j<5; j++)
+            {
+                chdziec[i][j]=chrod[3][j];
+            }
+        };
+        if (kolo[4]<ruletka && ruletka<kolo[5])
+        {
+            for (int j=0; j<5; j++)
+            {
+                chdziec[i][j]=chrod[4][j];
+            }
+        };
+        if (kolo[5]<ruletka && ruletka<kolo[6])
+        {
+            for (int j=0; j<5; j++)
+            {
+                chdziec[i][j]=chrod[5][j];
+            }
+        };
     }
 }
 
-void kopia(float chrod[6][5],float chdziec[6][5]){
+void kopia(float chrod[6][5],float chdziec[6][5])
+{
     for (int i=0; i<6; i++)
     {
         for (int j=0; j<5; j++)
@@ -81,18 +130,21 @@ void kopia(float chrod[6][5],float chdziec[6][5]){
     }
 }
 
+void wyswietlic (float chromosomy[6][5]){
+for (int i=0; i<6; i++){cout<<"Ch"<<i+1<<" ";for (int j=0; j<5; j++){cout<<chromosomy[i][j]<<" ";}cout<<" "<<endl;}
+}
 int main()
 {
-    int a, b, c, d, xrod=0, xdziec=0, iter=0;
+    srand (time(NULL));
+    int a, b, c, d, xrod[2]= {0}, xdziec[2]= {0}, iter=0, maks, x;
     double pk, pm;
     float chrod[6][5], fenrod[6], fendziec[6], funkrod[6], funkdziec[6], chdziec[6][5];
-    float kolo[7]={0};
+    float kolo[8]= {0};
     cout<<"Podaj wspolczynniki a,b,c,d: ";
     cin>>a>>b>>c>>d;
     cout<<"Podaj wspolczynniki krzyzowania Pk i mutacji Pm: ";
     cin>>pk>>pm;
 
-    //srand (time(NULL));
     for (int i=0; i<6; i++)
     {
         for (int j=0; j<5; j++)
@@ -102,42 +154,35 @@ int main()
     }
 
 
-cout<<"Pula poczatkowa chromosomow: "<<endl;
-    for (int i=0; i<6; i++)
-    {   cout<<"Ch"<<i+1<<" ";
-        for (int j=0; j<5; j++) {cout<<chrod[i][j]<<" ";}
-        cout<<" "<<endl;}
+    cout<<"Pula poczatkowa chromosomow: "<<endl;
+    wyswietlic(chrod);
 
-int sumR,sumD;
-    do {
+    int sumR,sumD; bool tak=false;
+    int r=0,dz=0;int wartosc[10001]={0};do
+    {
 
         konvert(chrod,fenrod);
-        funkcja(funkrod,fenrod,kolo,a,b,c,d,&xrod);
+        funkcja(funkrod,fenrod,kolo,a,b,c,d,xrod);
         sumR=kolo[7];
         koloruletki(kolo,funkrod,chrod,chdziec);
         krzyzowanie(chdziec,pk);
         mutacja(chdziec,pm);
 
         konvert(chdziec,fendziec);
-        funkcja(funkdziec,fendziec,kolo,a,b,c,d,&xdziec);
+        funkcja(funkdziec,fendziec,kolo,a,b,c,d,xdziec);
         sumD=kolo[7];
-        cout<<sumR<<" --- "<<sumD<<endl;
-        cout<<" ---___---___---___--- "<<xrod<<" --- "<<xdziec<<endl;
         iter++;
-        cout<<iter<<endl;
-        kopia(chrod,chdziec);
-        }
-        while (iter<6);
-cout<<"Pula poczatkowa chromosomow---------------: "<<iter<<endl;
-    for (int i=0; i<6; i++)
-    {
-        cout<<"Ch"<<i+1<<" ";
-        for (int j=0; j<5; j++) {cout<<chrod[i][j]<<" ";}
-        cout<<" "<<endl;}
 
-    //cout<<"Maksymalna wartość funkcji w przedziale: "<< <<endl;
-    //cout<<"Wartość x dla maksymalnej wartości: "<< <<endl;
+        kopia(chrod,chdziec);
+        cout<<"Pula chromosomow: "<<iter<<endl; wyswietlic(chrod);
+        if (xrod[0]<=xdziec[0]) { wartosc[r]=xdziec[0]; r++; x=xdziec[1];}
+        if(sumR<=sumD && r>=32) tak=true;
+    }
+    while(tak!=true);
+    cout<<"Pula koncowa chromosomow: "<<endl;
+    wyswietlic(chrod);
+    cout<<"Maksymalna wartosc funkcji w przedziale: "<< wartosc[r-1] <<endl;
+    cout<<"Wartosc x dla maksymalnej wartosci: "<< x <<endl;
     cout<<"Liczba iteracji: "<< iter <<endl;
     return 0;
 }
-
